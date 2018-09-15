@@ -1,4 +1,4 @@
-# Interactive UI Components
+# LAB - Interactive UI Components
 
 ## Context
 In order to become a competent front-end developer, it is a good idea to build common U.I. components. For this lab, you will build two components:
