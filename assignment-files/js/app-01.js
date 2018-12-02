@@ -66,5 +66,45 @@ var pressHTML = `
 
 /* 01 - UI TABS :: Your code below.... */
 
+let container = document.querySelector('.ui-tabs__content');
+container.innerHTML = membershipHTML;
+let listLi = document.querySelectorAll('.ui-tabs__tabslist li');
+document.querySelector('.ui-tabs__tabslist').addEventListener('click', (e) => {
+
+  (function() {
+  
+    listLi.forEach(li => li.classList.remove('ui-tabs__tab--selected'));//note ate the end
+    // console.log(this)
+  }).call(this);
+ 
+
+
+  e.target.classList.add('ui-tabs__tab--selected');
+
+   let tab = e.target.dataset.tab;//gets elem from `data-`
+   
+   if (tab === 'membership') {
+    container.innerHTML = membershipHTML;
+  
+  } else if(tab === 'programs') {
+    container.innerHTML = programsHTML;
+
+  } else if(tab === 'screenings') {
+    container.innerHTML = screeningsHTML;
+
+  } else if(tab === 'press') {
+    container.innerHTML = pressHTML;
+  }
+});
+
+
 document.querySelector('.ui-tabs__content')
   .innerHTML = membershipHTML
+
+
+  
+  /**Note lines 76: Javascript define que una función invocada sin contexto, 
+   * el contexto debe ser el Objeto Global, que en el caso de un navegador sería window. 
+   * Por lo que en una función que no esté contenida en 
+   * ningún objeto recibirá el objeto global como this.
+   http://blog.amatiasq.com/2012/01/javascript-conceptos-basicos-this-call-y-apply/ */
