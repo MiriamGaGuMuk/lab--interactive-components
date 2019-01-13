@@ -1,64 +1,103 @@
+
 /* 02 - FORM VALIDATION :: YOUR CODE BELOW */
 
-let forms = document.forms["registration-form"]
 
-document.querySelector(".btn").addEventListener('click', showSection = function(e) {
-  e.preventDefault()
+let form = document.getElementById('registration-form')
+let validateUser = document.querySelector('.validation--username')
+let validatePass = document.querySelector('.validation--user-password')
+let confirmPass = document.querySelector('.validation--confirm-password')
+let validateTxId = document.querySelector('.validation--tax-id')
+let validateAccount = document.querySelector('.validation--account')
+let validateTerms = document.querySelector('.validation--terms-of-service')
+let confirmCheckbox = document.querySelector('.checkbox')
+let submitingForm = document.querySelector('.validation--entire-form')
 
-    let userName = forms.elements.username.value
-    let passWord = forms.elements.userpassword.value
-    let confirmPassword = forms.elements.confirmpassword.value
-    let taxId = forms.elements.taxid.value
-    let select = forms.elements.account
-    let selected = select.options[select.selectedIndex]
-    let terms = forms.elements.termsofservice
 
-    let textName = forms.querySelector('.validation--username')
-    if (userName === '') {
-      textName.textContent = 'Username cannot be blank'
 
-    }else if (userName !== '') {
-      textName.textContent = 'Success'
+form.addEventListener("submit", function(e){
+
+  e.preventDefault();
+  
+  let fields = document.querySelectorAll('.form-group__field_input')
+  fields.forEach(function(fields){
+
+    console.log(confirmCheckbox.checked)
+    
+    if (fields.value === "" &&  fields.name === "username") {
+
+        validateUser.innerHTML = "Username cannot be in blank"
+
+      } else if (fields.name === "username" && fields.value.length > 0) {
+
+        validateUser.innerHTML = "Success"
+      }
+
+    if (fields.value.length < 8 && fields.name === "userpassword") {
+
+        validatePass.innerHTML = "Password must have a minimum of 8 characters"
+
+    } else if (fields.name === "username" && fields.value.length <= 8) {
+
+        validatePass.innerHTML = "Success"
     }
 
-    let validationUserPassword = forms.querySelector('.validation--user-password')
-    if (passWord.length < 8) {
-      validationUserPassword.textContent = 'Passwords must have a minimum of 8 characters'
-    }else if (passWord.length >= 8) {
-      validationUserPassword.textContent = 'Success'
+    if (fields.name === 'confirmpassword') {
+
+      if (fields.value.length > 7 && fields[2].value === fields[1].value) {
+
+        confirmPass.innerHTML = 'Success';
+
+      } else {
+
+        confirmPass.innerHTML = 'Passwords must match'
+      }
     }
 
-    let validationConfirmPassword = forms.querySelector('.validation--confirm-password')
-    if (confirmPassword !== passWord || confirmPassword === '') {
-      validationConfirmPassword.textContent = 'Passwords must match'
-    }else if (confirmPassword === passWord) {
-      validationConfirmPassword.textContent = 'Success'
+    if (fields.name === 'taxid') {
+
+      if (fields.value === "") {
+
+        validateTxId.innerHTML = "Must provide Tax ID number"
+
+      } else if (isNaN(fields.value) || fields.value.length !== 10) {
+
+        validateTxId.innerHTML = "Tax ID number is only numbers and is 10 digits"
+
+      } else {
+
+        validateTxId.innerHTML = "Success"
+      }
     }
 
-    let validationTaxId = forms.querySelector('.validation--tax-id')
-    if (taxId === '') {
-      validationTaxId.textContent = 'Must provide Tax ID Number'
-    }else if (taxId.length === 10  &&   /^([0-9]{10})$/i.test(taxId)) {//Check if the input is reciving number from 0-9 and {10} the number of digits
-      
-      validationTaxId.textContent = 'Success'
-    }else{
-      validationTaxId.textContent = 'Tax ID number is only numbers and is 10 digits'
+    if (fields.name === 'account') {
+
+      if(fields.selectedIndex === 0){
+
+        validateAccount.innerHTML = 'Must select account type';
+
+      }else {
+
+      validateAccount.innerHTML = 'Success';
+      }
     }
+  })
 
-    let validationAccount = forms.querySelector('.validation--account')
-    if (selected.value === "") {
-      validationAccount.textContent = "Must select account type"
-    }else {
-      validationAccount.textContent = "Success"
-    }
 
-    let validationTermsOfService = forms.querySelector('.checkbox, form-group__field field--termsofservice ')
-    console.log(terms.checked);
-    if (terms.checked === false) {
-      validationTermsOfService.textContent = "Must approve terms of service"
+  if(confirmCheckbox.checked === false){
 
-    }else {
-      validationTermsOfService.textContent = "Success"
-    }
+    validateTerms.innerHTML = 'Must approve terms of service';
 
-});
+  }else {
+
+    validateTerms.innerHTML = 'Success';
+  }
+
+
+  if (validateUser.innerHTML === "Success" && validatePass.innerHTML === "Success" && confirmPass.innerHTML === "Success" && validateTxId.innerHTML === "Success" && validateAccount.innerHTML  === "Success" &&
+
+    validateTerms.innerHTML === "Success" ) {
+
+    submitingForm.innerHTML = "Form Complete"
+  }
+
+})
