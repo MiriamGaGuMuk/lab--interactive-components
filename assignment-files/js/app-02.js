@@ -19,64 +19,44 @@ form.addEventListener("submit", function(e){
   e.preventDefault();
   
   let fields = document.querySelectorAll('.form-group__field_input')
-  fields.forEach(function(fields){
+  fields.forEach(function(input){
 
     console.log(confirmCheckbox.checked)
     
-    if (fields.value === "" &&  fields.name === "username") {
-
+    if (input.value === "" &&  input.name === "username") {
         validateUser.innerHTML = "Username cannot be in blank"
-
-      } else if (fields.name === "username" && fields.value.length > 0) {
-
+      } else if (input.name === "username" && input.value.length > 0) {
         validateUser.innerHTML = "Success"
       }
 
-    if (fields.value.length < 8 && fields.name === "userpassword") {
-
+    if (input.value.length < 8 && input.name === "userpassword") {
         validatePass.innerHTML = "Password must have a minimum of 8 characters"
-
-    } else if (fields.name === "username" && fields.value.length <= 8) {
-
+    } else if (input.name === "username" && input.value.length <= 8) {
         validatePass.innerHTML = "Success"
     }
 
-    if (fields.name === 'confirmpassword') {
-
-      if (fields.value.length > 7 && fields[2].value === fields[1].value) {
-
+    if (input.name === 'confirmpassword') {
+      if (input.value.length > 7 && fields[2].value === fields[1].value) {
         confirmPass.innerHTML = 'Success';
-
       } else {
-
         confirmPass.innerHTML = 'Passwords must match'
       }
     }
 
-    if (fields.name === 'taxid') {
-
-      if (fields.value === "") {
-
+    if (input.name === 'taxid') {
+      if (input.value === "") {
         validateTxId.innerHTML = "Must provide Tax ID number"
-
-      } else if (isNaN(fields.value) || fields.value.length !== 10) {
-
+      } else if (isNaN(input.value) || input.value.length !== 10) {
         validateTxId.innerHTML = "Tax ID number is only numbers and is 10 digits"
-
       } else {
-
         validateTxId.innerHTML = "Success"
       }
     }
 
-    if (fields.name === 'account') {
-
-      if(fields.selectedIndex === 0){
-
+    if (input.name === 'account') {
+      if(input.selectedIndex === 0){
         validateAccount.innerHTML = 'Must select account type';
-
       }else {
-
       validateAccount.innerHTML = 'Success';
       }
     }
@@ -84,19 +64,14 @@ form.addEventListener("submit", function(e){
 
 
   if(confirmCheckbox.checked === false){
-
     validateTerms.innerHTML = 'Must approve terms of service';
-
   }else {
-
     validateTerms.innerHTML = 'Success';
   }
 
 
   if (validateUser.innerHTML === "Success" && validatePass.innerHTML === "Success" && confirmPass.innerHTML === "Success" && validateTxId.innerHTML === "Success" && validateAccount.innerHTML  === "Success" &&
-
     validateTerms.innerHTML === "Success" ) {
-
     submitingForm.innerHTML = "Form Complete"
   }
 
